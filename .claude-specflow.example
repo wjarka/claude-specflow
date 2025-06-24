@@ -1,0 +1,14 @@
+# Claude Toolkit Configuration
+# Copy this file to .claude-specflow in your project root and customize as needed
+
+# Project name (default: auto-detected from current directory name)
+# PROJECT_NAME=my-awesome-project
+
+# Feature prefix for branches and directories (default: feat)
+# FEATURE_PREFIX=story
+
+# Directory for specifications (default: specs)
+# SPEC_DIR=requirements
+
+# Default branch for merging (default: auto-detected main/master)
+# DEFAULT_BRANCH=develop
