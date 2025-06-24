@@ -55,7 +55,7 @@ echo ""
 echo "🔄 Syncing with main branch..."
 
 # Get main branch name
-MAIN_BRANCH=$(git symbolic-ref refs/remotes/origin/HEAD 2>/dev/null | sed 's@^refs/remotes/origin/@@' || echo "main")
+MAIN_BRANCH=$(detect_default_branch)
 
 # Fetch and rebase
 git fetch origin
