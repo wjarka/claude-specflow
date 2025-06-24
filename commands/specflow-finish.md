@@ -42,11 +42,9 @@ init_config
 
 # Try to auto-detect feature from current directory
 CURRENT_DIR=$(basename "$PWD")
-if [[ "$CURRENT_DIR" =~ ^.*-([a-z]+)-([0-9]+)$ ]]; then
+if FEATURE_NUMBER=$(extract_feature_from_dir); then
     # We're in a feature worktree - auto-detect
-    PREFIX="${BASH_REMATCH[1]}"
-    NUMBER="${BASH_REMATCH[2]}"
-    FEATURE_INPUT="$PREFIX-$(printf "%03d" $NUMBER)"
+    FEATURE_INPUT="$FEATURE_NUMBER"
     echo "🔍 Auto-detected feature: $FEATURE_INPUT (from directory: $CURRENT_DIR)"
 elif [ -n "$1" ]; then
     # Feature number provided as argument
@@ -92,7 +90,15 @@ if [ -n "$(git status --porcelain)" ]; then
     echo "📝 Uncommitted changes found. Committing..."
     
     # Generate commit message based on feature
-    SPEC_FILE="../$(detect_project_name)/$(get_spec_file "$FEATURE_NUMBER")"
+    # Get project name - if in worktree, extract from directory name
+    if PROJECT_NAME=$(extract_project_from_worktree_dir); then
+        # We're in a worktree, use extracted project name
+        true
+    else
+        # Not in worktree, use regular detection
+        PROJECT_NAME=$(detect_project_name)
+    fi
+    SPEC_FILE="../$PROJECT_NAME/$(get_spec_file "$FEATURE_NUMBER")"
     if [ -f "$SPEC_FILE" ]; then
         FEATURE_TITLE=$(head -1 "$SPEC_FILE" | sed 's/^# [^:]*: //')
         COMMIT_MSG="Implement $FEATURE_NUMBER: $FEATURE_TITLE"

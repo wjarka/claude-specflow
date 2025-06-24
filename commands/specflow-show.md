@@ -38,14 +38,21 @@ FEATURE_NUMBER=$(extract_feature_from_dir)
 
 if [ $? -ne 0 ]; then
     echo "❌ Not in a feature worktree directory"  
-    echo "Expected directory name pattern: {PROJECT}-$(get_feature_prefix)-XXX"
+    echo "Expected directory name pattern: {PROJECT}-$(get_feature_prefix)-{NUMBER}"
     echo "Current directory: $CURRENT_DIR"
     echo ""
     echo "🚀 NEXT STEP: Use /specflow-start <number> to create a feature worktree"
     exit 1
 fi
 
-PROJECT_NAME=$(detect_project_name)
+# Get project name - if in worktree, extract from directory name
+if PROJECT_NAME=$(extract_project_from_worktree_dir); then
+    # We're in a worktree, use extracted project name
+    true
+else
+    # Not in worktree, use regular detection
+    PROJECT_NAME=$(detect_project_name)
+fi
 SPEC_FILE="../$PROJECT_NAME/$(get_spec_file "$FEATURE_NUMBER")"
 
 echo "📋 Feature Specification: $FEATURE_NUMBER"

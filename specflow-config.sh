@@ -129,12 +129,27 @@ get_spec_file() {
 # Extract feature number from current directory name
 extract_feature_from_dir() {
     local current_dir=$(basename "$PWD")
-    local project_name=$(detect_project_name)
     local prefix=$(get_feature_prefix)
 
-    # Check if we're in a feature worktree
-    if [[ "$current_dir" =~ ^$project_name-$prefix-[0-9]+$ ]]; then
-        echo "$current_dir" | sed "s/$project_name-//"
+    # Check if we're in a feature worktree (pattern: {PROJECT}-{PREFIX}-{NUMBER})
+    if [[ "$current_dir" =~ ^.*-$prefix-[0-9]+$ ]]; then
+        # Extract the feature part (prefix-number)
+        echo "$current_dir" | sed "s/^.*-\($prefix-[0-9]\+\)$/\1/"
+        return 0
+    else
+        return 1
+    fi
+}
+
+# Extract project name from worktree directory name
+extract_project_from_worktree_dir() {
+    local current_dir=$(basename "$PWD")
+    local prefix=$(get_feature_prefix)
+
+    # Extract project name from pattern: {PROJECT}-{PREFIX}-{NUMBER}
+    if [[ "$current_dir" =~ ^.*-$prefix-[0-9]+$ ]]; then
+        echo "$current_dir" | sed "s/-$prefix-[0-9]\+$//"
+        return 0
     else
         return 1
     fi
