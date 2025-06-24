@@ -69,8 +69,17 @@ else
     echo "✅ Created CLAUDE.md with Claude Specflow import"
 fi
 
-# Make toolkit scripts executable (update path since .claude/scripts was removed)
-chmod +x "$TOOLKIT_DIR/specflow-config.sh"
+# Copy bin directory with all scripts
+echo "📋 Copying script files..."
+mkdir -p "$TOOLKIT_DIR/bin"
+
+# Copy all scripts from the repository to the installation directory
+# (Note: We're in $TOOLKIT_DIR at this point from the cd above)
+cp bin/*.sh "$TOOLKIT_DIR/bin/" 2>/dev/null || true
+
+# Make all scripts executable
+echo "🔧 Making scripts executable..."
+chmod +x "$TOOLKIT_DIR/bin/"*.sh
 
 echo "✅ Claude Specflow installed successfully!"
 echo ""
