@@ -1,6 +1,6 @@
 ---
 description: Syncs feature branch with latest default branch and prepares for implementation
-allowed-tools: [Bash]
+allowed-tools: [Bash(exec:*)]
 ---
 
 # Sync Feature

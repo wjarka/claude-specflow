@@ -1,6 +1,6 @@
 ---
 description: Show specification for current feature worktree
-allowed-tools: [Bash, Read]
+allowed-tools: [Bash(exec:*)]
 ---
 
 # Show Feature Specification
@@ -23,7 +23,10 @@ Shows the specification for the current feature worktree.
 
 ## Implementation
 
-The bash logic is handled by an external script: `bin/specflow-show.sh`
+```bash
+# Execute the specflow-show script
+exec "$HOME/.claude-specflow/bin/specflow-show.sh"
+```
 
 After the bash validation, Claude will:
 1. **Read the specification file** using the Read tool

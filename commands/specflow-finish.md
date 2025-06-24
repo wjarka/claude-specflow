@@ -1,6 +1,6 @@
 ---
 description: Completes feature development by merging back to main and cleaning up the worktree
-allowed-tools: [Bash]
+allowed-tools: [Bash(exec:*)]
 ---
 
 # Finish Feature

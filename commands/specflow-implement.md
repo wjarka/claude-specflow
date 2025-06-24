@@ -1,6 +1,6 @@
 ---
 description: Auto-detect feature, sync with main, and start implementation
-allowed-tools: [Bash, TodoWrite, Read, Edit, MultiEdit, Write, Grep, Glob]
+allowed-tools: [Bash(exec:*)]
 ---
 
 # Implement Feature
@@ -22,7 +22,10 @@ Auto-detects current feature from directory name, syncs with main branch, and st
 
 ## Implementation
 
-The bash logic is handled by an external script: `bin/specflow-implement.sh`
+```bash
+# Execute the specflow-implement script
+exec "$HOME/.claude-specflow/bin/specflow-implement.sh"
+```
 
 After running the sync and validation, Claude will automatically:
 

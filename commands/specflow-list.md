@@ -1,6 +1,6 @@
 ---
 description: Shows all active feature worktrees and their status
-allowed-tools: [Bash]
+allowed-tools: [Bash(exec:*)]
 ---
 
 # List Features

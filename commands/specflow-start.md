@@ -1,6 +1,6 @@
 ---
 description: Creates an isolated worktree and branch for parallel feature development
-allowed-tools: [Bash]
+allowed-tools: [Bash(exec:*)]
 ---
 
 # Start Feature
