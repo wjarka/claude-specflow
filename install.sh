@@ -5,6 +5,9 @@
 
 set -e
 
+# Preserve original working directory
+ORIGINAL_DIR="$PWD"
+
 TOOLKIT_DIR="$HOME/.claude-specflow"
 CLAUDE_DIR="$HOME/.claude"
 REPO_URL="https://github.com/wjarka/claude-specflow.git"
@@ -88,7 +91,7 @@ echo ""
 echo "📚 For more info, see the toolkit documentation or run /specflow-plan to get started!"
 
 # Check if running from the toolkit directory itself
-if [[ "$PWD" == *"claude-specflow"* ]]; then
+if [[ "$ORIGINAL_DIR" == *"claude-specflow"* ]]; then
     echo ""
     echo "⚠️  Note: You're currently in the toolkit directory. Navigate to your project directory to start using the commands."
 fi
