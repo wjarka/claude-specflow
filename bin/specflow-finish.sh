@@ -104,8 +104,8 @@ Completed feature implementation."
 
 # Clean up
 echo "🧹 Cleaning up..."
-git branch -d "$BRANCH_NAME"
 git worktree remove "$WORKTREE_PATH"
+git branch -d "$BRANCH_NAME"
 
 echo ""
 echo "🎉 Feature $FEATURE_NUMBER completed successfully!"
