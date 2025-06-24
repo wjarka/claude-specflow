@@ -16,20 +16,23 @@ That's it! The toolkit is now available globally across all your projects.
 # 1. Navigate to your project
 cd my-project
 
-# 2. Plan your first feature  
+# 2. Start Claude Code session and plan your first feature  
+claude
 /feat/plan
 
-# 3. Start development
+# 3. Start development (still in Claude session)
 /feat/start 1
 
 # 4. Switch to feature directory and start new Claude session
 cd ../my-project-feat-001
+claude
 
 # 5. In the new Claude session, implement the feature
 /feat/implement
 
 # 6. When done, finish the feature (from main project directory)
 cd ../my-project
+claude
 /feat/finish 1
 ```
 
@@ -49,11 +52,12 @@ cd ../my-project
 
 ### 1. **Planning Phase** (in main directory)
 ```bash
+claude  # Start Claude Code session
 /feat/plan
 # → Creates specs/feat-001.md with detailed implementation plan
 ```
 
-### 2. **Start Development**
+### 2. **Start Development** (still in Claude session)
 ```bash
 /feat/start 1
 # → Creates ../my-project-feat-001/ worktree
@@ -64,7 +68,7 @@ cd ../my-project
 ### 3. **Implementation Phase** (in feature worktree)
 ```bash
 cd ../my-project-feat-001
-# Start new Claude Code session
+claude  # Start new Claude Code session
 /feat/implement
 # → Auto-syncs with main
 # → Shows spec summary  
@@ -74,6 +78,7 @@ cd ../my-project-feat-001
 ### 4. **Completion Phase** (back in main directory)
 ```bash
 cd ../my-project
+claude  # Start Claude Code session
 /feat/finish 1
 # → Commits changes
 # → Merges to main
@@ -124,6 +129,7 @@ your-project/
 
 ### Multiple Features Simultaneously
 ```bash
+claude  # Start Claude Code session
 # Plan and start multiple features
 /feat/plan    # Creates feat-001
 /feat/plan    # Creates feat-002
@@ -148,6 +154,7 @@ DEFAULT_BRANCH=develop
 
 ### Checking Status
 ```bash
+claude  # Start Claude Code session
 /feat/list    # See all active features with next steps
 /feat/show    # View current feature spec (from feature worktree)
 ```
@@ -183,13 +190,16 @@ The toolkit adapts to your existing:
 
 ### Basic Feature
 ```bash
+claude  # Start Claude Code session
 /feat/plan
 # Describe: "Add user authentication"
 /feat/start 1
 cd ../my-app-feat-001
+claude  # Start new Claude session in feature worktree
 /feat/implement
 # [Claude implements the feature]
-cd ../my-app  
+cd ../my-app
+claude  # Start Claude session in main directory
 /feat/finish 1
 ```
 
