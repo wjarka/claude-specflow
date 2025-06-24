@@ -4,7 +4,7 @@ Creates an isolated worktree and branch for parallel feature development.
 
 ## Usage
 ```bash
-/feat/start <feature-number>
+/specflow-start <feature-number>
 ```
 
 Supports multiple formats:
@@ -31,12 +31,12 @@ init_config
 
 if [ -z "$1" ]; then
     prefix=$(get_feature_prefix)
-    echo "Usage: /feat/start <feature-number>"
+    echo "Usage: /specflow-start <feature-number>"
     echo "Examples:"
-    echo "  /feat/start ${prefix}-009"
-    echo "  /feat/start ${prefix}-9"
-    echo "  /feat/start 009"
-    echo "  /feat/start 9"
+    echo "  /specflow-start ${prefix}-009"
+    echo "  /specflow-start ${prefix}-9"
+    echo "  /specflow-start 009"
+    echo "  /specflow-start 9"
     exit 1
 fi
 
@@ -60,7 +60,7 @@ if [ -d "$WORKTREE_PATH" ] && git branch --list "$BRANCH_NAME" | grep -q "$BRANC
     echo "🚀 NEXT STEPS:"
     echo "1. cd $WORKTREE_PATH"
     echo "2. Start a new Claude Code session there"
-    echo "3. Run /feat/implement to sync and start coding"
+    echo "3. Run /specflow-implement to sync and start coding"
     exit 0
 fi
 
@@ -68,7 +68,7 @@ fi
 if [ ! -f "$SPEC_FILE" ]; then
     echo "❌ Spec file not found: $SPEC_FILE"
     echo ""
-    echo "🚀 NEXT STEP: Run /feat/plan to create the specification first"
+    echo "🚀 NEXT STEP: Run /specflow-plan to create the specification first"
     exit 1
 fi
 
@@ -85,7 +85,7 @@ echo ""
 echo "🚀 NEXT STEPS:"
 echo "1. cd $WORKTREE_PATH"
 echo "2. Start a new Claude Code session in that directory"
-echo "3. Run /feat/implement to sync with main and start coding"
+echo "3. Run /specflow-implement to sync with main and start coding"
 echo ""
 echo "💡 TIP: Your feature spec is automatically available in the new session"
 ```

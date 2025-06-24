@@ -40,7 +40,7 @@ if [ $? -ne 0 ]; then
     echo "Expected directory name pattern: {PROJECT}-$(get_feature_prefix)-XXX"
     echo "Current directory: $CURRENT_DIR"
     echo ""
-    echo "🚀 NEXT STEP: Use /feat/start <number> to create a feature worktree first"
+    echo "🚀 NEXT STEP: Use /specflow-start <number> to create a feature worktree first"
     exit 1
 fi
 
@@ -58,8 +58,8 @@ if [ ! -f "$SPEC_FILE" ]; then
     echo ""
     echo "🚀 NEXT STEPS:"
     echo "1. cd ../$PROJECT_NAME"
-    echo "2. Run /feat/plan to create the specification"
-    echo "3. Run /feat/start $NUMBER to recreate the worktree"
+    echo "2. Run /specflow-plan to create the specification"
+    echo "3. Run /specflow-start $NUMBER to recreate the worktree"
     exit 1
 fi
 
@@ -81,7 +81,7 @@ if ! git rebase "origin/$MAIN_BRANCH"; then
     echo "1. Resolve conflicts in your editor"
     echo "2. git add ."
     echo "3. git rebase --continue"
-    echo "4. Run /feat/implement again"
+    echo "4. Run /specflow-implement again"
     exit 1
 fi
 
@@ -109,13 +109,13 @@ After running the sync and validation, Claude will automatically:
 
 ## Next Steps After Implementation
 When your implementation is complete:
-- Run `/feat/finish` to merge back to main and cleanup
+- Run `/specflow-finish` to merge back to main and cleanup
 - This will automatically commit your changes and remove the worktree
 
 ## Example Usage
 ```bash
 # From within feature worktree (e.g., ../myproject-feat-009/)
-/feat/implement
+/specflow-implement
 
 # Output:
 🚀 Auto-implementing feature: feat-009

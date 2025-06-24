@@ -34,11 +34,11 @@ Creates a structured plan including:
 ### Step 4: Documentation & Next Steps
 - Find next available feature number ({PREFIX}-XXX.md)
 - Create properly formatted specification file
-- **Guide user to next step**: `/feat/start <number>`
+- **Guide user to next step**: `/specflow-start <number>`
 
 ## Example Usage
 ```
-/feat/plan
+/specflow-plan
 
 > Please describe the feature you want to implement:
 "Add Spotify playlist import functionality"
@@ -53,7 +53,7 @@ yes
 
 ✅ Plan documented in {SPEC_DIR}/{PREFIX}-009.md
 
-🚀 NEXT STEP: Run `/feat/start 9` to create the feature worktree
+🚀 NEXT STEP: Run `/specflow-start 9` to create the feature worktree
 ```
 
 ## Output Format

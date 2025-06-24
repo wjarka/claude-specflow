@@ -9,7 +9,7 @@ Shows the specification for the current feature worktree.
 
 ## Usage
 ```bash
-/feat/show
+/specflow-show
 ```
 
 ## Requirements
@@ -41,7 +41,7 @@ if [ $? -ne 0 ]; then
     echo "Expected directory name pattern: {PROJECT}-$(get_feature_prefix)-XXX"
     echo "Current directory: $CURRENT_DIR"
     echo ""
-    echo "🚀 NEXT STEP: Use /feat/start <number> to create a feature worktree"
+    echo "🚀 NEXT STEP: Use /specflow-start <number> to create a feature worktree"
     exit 1
 fi
 
@@ -57,7 +57,7 @@ if [ ! -f "$SPEC_FILE" ]; then
     echo ""
     echo "🚀 NEXT STEPS:"
     echo "1. cd ../$PROJECT_NAME"
-    echo "2. Run /feat/plan to create the specification"
+    echo "2. Run /specflow-plan to create the specification"
     exit 1
 fi
 
@@ -74,14 +74,14 @@ After the bash validation, Claude will:
 
 ## Next Steps Guidance
 After showing the spec, Claude will suggest:
-- If you haven't started: "Run `/feat/implement` to sync and start coding"
+- If you haven't started: "Run `/specflow-implement` to sync and start coding"
 - If implementation is in progress: "Continue implementing the remaining tasks"
-- If implementation seems complete: "Run `/feat/finish <number>` to merge and cleanup"
+- If implementation seems complete: "Run `/specflow-finish <number>` to merge and cleanup"
 
 ## Example Usage
 ```bash
 # From within feature worktree
-/feat/show
+/specflow-show
 
 # Output:
 📋 Feature Specification: feat-009
@@ -96,5 +96,5 @@ This feature adds Spotify playlist import functionality...
 
 [Full specification displayed...]
 
-🚀 NEXT STEP: Run /feat/implement to start coding this feature
+🚀 NEXT STEP: Run /specflow-implement to start coding this feature
 ```

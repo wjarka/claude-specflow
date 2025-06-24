@@ -4,7 +4,7 @@ Completes feature development by merging back to main and cleaning up the worktr
 
 ## Usage
 ```bash
-/feat/finish [feature-number]
+/specflow-finish [feature-number]
 ```
 
 - **From feature worktree**: Auto-detects feature number from directory name
@@ -54,14 +54,14 @@ elif [ -n "$1" ]; then
 else
     # No feature number and not in worktree
     prefix=$(get_feature_prefix)
-    echo "Usage: /feat/finish [feature-number]"
+    echo "Usage: /specflow-finish [feature-number]"
     echo ""
     echo "Examples:"
-    echo "  /feat/finish ${prefix}-009    # From main directory"
-    echo "  /feat/finish ${prefix}-9      # From main directory" 
-    echo "  /feat/finish 009              # From main directory"
-    echo "  /feat/finish 9                # From main directory"
-    echo "  /feat/finish                  # From feature worktree (auto-detects)"
+    echo "  /specflow-finish ${prefix}-009    # From main directory"
+    echo "  /specflow-finish ${prefix}-9      # From main directory" 
+    echo "  /specflow-finish 009              # From main directory"
+    echo "  /specflow-finish 9                # From main directory"
+    echo "  /specflow-finish                  # From feature worktree (auto-detects)"
     echo ""
     echo "💡 TIP: Run from feature worktree to auto-detect feature number"
     exit 1
@@ -75,7 +75,7 @@ WORKTREE_PATH=$(get_worktree_path "$FEATURE_NUMBER")
 if [ ! -d "$WORKTREE_PATH" ]; then
     echo "❌ Feature worktree not found: $WORKTREE_PATH"
     echo ""
-    echo "🚀 NEXT STEP: Use /feat/list to see active features"
+    echo "🚀 NEXT STEP: Use /specflow-list to see active features"
     exit 1
 fi
 
@@ -141,7 +141,7 @@ echo ""
 echo "🚀 NEXT STEPS:"
 echo "1. Exit Claude Code (the worktree directory no longer exists)"
 echo "2. Run tests to verify integration: [your-test-command]"
-echo "3. Consider running /feat/plan for your next feature"
+echo "3. Consider running /specflow-plan for your next feature"
 echo ""
 echo "💡 TIP: You're now back in the main worktree and ready for the next feature!"
 ```
@@ -156,12 +156,12 @@ When this command is invoked, Claude will:
 
 ## Example Usage
 ```bash
-/feat/finish feat-009
+/specflow-finish feat-009
 # or simply:
-/feat/finish 9
+/specflow-finish 9
 ```
 
 ## After Completion
 - **Exit Claude Code** - the worktree directory no longer exists
 - Run tests to verify integration
-- Start planning your next feature with `/feat/plan`
+- Start planning your next feature with `/specflow-plan`

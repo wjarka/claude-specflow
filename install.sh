@@ -26,15 +26,16 @@ fi
 
 echo "🔗 Creating symlinks..."
 
-# Create symlink for feat commands
-if [ -L "$CLAUDE_DIR/commands/feat" ]; then
-    rm "$CLAUDE_DIR/commands/feat"
-elif [ -d "$CLAUDE_DIR/commands/feat" ]; then
-    echo "⚠️  Found existing feat directory, backing up to feat.backup"
-    mv "$CLAUDE_DIR/commands/feat" "$CLAUDE_DIR/commands/feat.backup"
-fi
-
-ln -s "$TOOLKIT_DIR/commands/feat" "$CLAUDE_DIR/commands/feat"
+# Create symlinks for specflow commands
+for cmd in plan start list show implement finish sync; do
+    if [ -L "$CLAUDE_DIR/commands/specflow-$cmd" ]; then
+        rm "$CLAUDE_DIR/commands/specflow-$cmd"
+    elif [ -f "$CLAUDE_DIR/commands/specflow-$cmd" ]; then
+        echo "⚠️  Found existing specflow-$cmd, backing up to specflow-$cmd.backup"
+        mv "$CLAUDE_DIR/commands/specflow-$cmd" "$CLAUDE_DIR/commands/specflow-$cmd.backup"
+    fi
+    ln -s "$TOOLKIT_DIR/commands/specflow-$cmd.md" "$CLAUDE_DIR/commands/specflow-$cmd"
+done
 
 # Create symlink for CLAUDE.feat.md
 if [ -L "$CLAUDE_DIR/CLAUDE.feat.md" ]; then
@@ -75,20 +76,20 @@ chmod +x "$TOOLKIT_DIR/specflow-config.sh"
 echo "✅ Claude Specflow installed successfully!"
 echo ""
 echo "📋 Available commands:"
-echo "  /feat/plan     - Plan a new feature"
-echo "  /feat/start    - Create feature worktree" 
-echo "  /feat/list     - List active features"
-echo "  /feat/show     - Show current feature spec"
-echo "  /feat/implement - Sync and start implementation"
-echo "  /feat/finish   - Complete and merge feature"
+echo "  /specflow-plan     - Plan a new feature"
+echo "  /specflow-start    - Create feature worktree" 
+echo "  /specflow-list     - List active features"
+echo "  /specflow-show     - Show current feature spec"
+echo "  /specflow-implement - Sync and start implementation"
+echo "  /specflow-finish   - Complete and merge feature"
 echo ""
 echo "🚀 To get started:"
 echo "1. cd to your project directory"
-echo "2. Run /feat/plan to create your first feature"
+echo "2. Run /specflow-plan to create your first feature"
 echo ""
 echo "💡 Optional: Copy .claude-specflow.example to your project root as .claude-specflow to customize settings"
 echo ""
-echo "📚 For more info, see the toolkit documentation or run /feat/plan to get started!"
+echo "📚 For more info, see the toolkit documentation or run /specflow-plan to get started!"
 
 # Check if running from the toolkit directory itself
 if [[ "$PWD" == *"claude-specflow"* ]]; then

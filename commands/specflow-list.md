@@ -4,7 +4,7 @@ Shows all active feature worktrees and their status.
 
 ## Usage
 ```bash
-/feat/list
+/specflow-list
 ```
 
 ## What it shows
@@ -46,7 +46,7 @@ while IFS= read -r line; do
             # Check if worktree directory exists
             if [ -d "$WORKTREE_PATH" ]; then
                 echo "   Status: ✅ Active"
-                echo "   Next: cd $WORKTREE_PATH && /feat/implement"
+                echo "   Next: cd $WORKTREE_PATH && /specflow-implement"
             else
                 echo "   Status: ❌ Directory missing"
                 echo "   Next: git worktree remove $WORKTREE_PATH"
@@ -61,11 +61,11 @@ done <<< "$WORKTREES"
 if [ "$FOUND_FEATURES" = false ]; then
     echo "No active feature worktrees found."
     echo ""
-    echo "🚀 NEXT STEP: Run /feat/plan to start planning a new feature"
+    echo "🚀 NEXT STEP: Run /specflow-plan to start planning a new feature"
 fi
 
 echo ""
-echo "💡 TIP: Use /feat/start <number> to create a new feature worktree"
+echo "💡 TIP: Use /specflow-start <number> to create a new feature worktree"
 ```
 
 ## Example Output
@@ -76,24 +76,24 @@ echo "💡 TIP: Use /feat/start <number> to create a new feature worktree"
    Path: ../my-project-feat-001
    Branch: feature/feat-001
    Status: ✅ Active
-   Next: cd ../my-project-feat-001 && /feat/implement
+   Next: cd ../my-project-feat-001 && /specflow-implement
 
 📁 feat-002  
    Path: ../my-project-feat-002
    Branch: feature/feat-002
    Status: ✅ Active
-   Next: cd ../my-project-feat-002 && /feat/implement
+   Next: cd ../my-project-feat-002 && /specflow-implement
 
-💡 TIP: Use /feat/start <number> to create a new feature worktree
+💡 TIP: Use /specflow-start <number> to create a new feature worktree
 ```
 
 ## Next Steps Guidance
 For each feature, the command shows:
-- ✅ **Active**: Ready for development - cd to worktree and run `/feat/implement`
+- ✅ **Active**: Ready for development - cd to worktree and run `/specflow-implement`
 - ❌ **Directory missing**: Worktree reference is stale - needs cleanup
 - 🚧 **In progress**: Implementation has started - cd to worktree to continue
 
 ## When No Features Exist
 If no feature worktrees are found:
-- Suggests running `/feat/plan` to start planning a new feature
+- Suggests running `/specflow-plan` to start planning a new feature
 - Shows how to create the first feature worktree

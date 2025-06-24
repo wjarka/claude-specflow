@@ -4,7 +4,7 @@ Syncs feature branch with latest default branch and prepares for implementation.
 
 ## Usage
 ```bash
-/feat/sync <feature-number>
+/specflow-sync <feature-number>
 ```
 
 Supports multiple formats:
@@ -23,7 +23,7 @@ Where `{PREFIX}` is your configured feature prefix (default: `feat`)
 - Before starting implementation of a planned feature
 - When default branch has been updated since feature creation
 - To validate your spec against current codebase state
-- **Note**: `/feat/implement` calls this automatically
+- **Note**: `/specflow-implement` calls this automatically
 
 ## Implementation
 ```bash
@@ -37,12 +37,12 @@ init_config
 
 if [ -z "$1" ]; then
     prefix=$(get_feature_prefix)
-    echo "Usage: /feat/sync <feature-number>"
+    echo "Usage: /specflow-sync <feature-number>"
     echo "Examples:"
-    echo "  /feat/sync ${prefix}-009"
-    echo "  /feat/sync ${prefix}-9"
-    echo "  /feat/sync 009"
-    echo "  /feat/sync 9"
+    echo "  /specflow-sync ${prefix}-009"
+    echo "  /specflow-sync ${prefix}-9"
+    echo "  /specflow-sync 009"
+    echo "  /specflow-sync 9"
     exit 1
 fi
 
@@ -55,7 +55,7 @@ WORKTREE_PATH=$(get_worktree_path "$FEATURE_NUMBER")
 if [ ! -d "$WORKTREE_PATH" ]; then
     echo "❌ Feature worktree not found: $WORKTREE_PATH"
     echo ""
-    echo "🚀 NEXT STEP: Run /feat/start $FEATURE_INPUT to create the worktree"
+    echo "🚀 NEXT STEP: Run /specflow-start $FEATURE_INPUT to create the worktree"
     exit 1
 fi
 
@@ -78,8 +78,8 @@ if git rebase "origin/$MAIN_BRANCH"; then
     echo "✅ Sync completed successfully!"
     echo ""
     echo "🚀 NEXT STEPS:"
-    echo "1. Run /feat/implement to start coding"
-    echo "2. Or run /feat/show to review the specification"
+    echo "1. Run /specflow-implement to start coding"
+    echo "2. Or run /specflow-show to review the specification"
 else
     echo "❌ Sync failed - conflicts need resolution"
     echo ""
@@ -87,20 +87,20 @@ else
     echo "1. Resolve conflicts in your editor"
     echo "2. git add ."
     echo "3. git rebase --continue"
-    echo "4. Run /feat/sync $FEATURE_INPUT again to verify"
+    echo "4. Run /specflow-sync $FEATURE_INPUT again to verify"
     exit 1
 fi
 ```
 
 ## Important
 - Run this from the **main repository directory**, not from within the feature worktree
-- Or simply use `/feat/implement` which calls sync automatically
+- Or simply use `/specflow-implement` which calls sync automatically
 
 ## Example Usage
 ```bash
-/feat/sync feat-009
+/specflow-sync feat-009
 # or simply:
-/feat/sync 9
+/specflow-sync 9
 
 # Output:
 🔄 Syncing feature: feat-009
@@ -112,8 +112,8 @@ fi
 ✅ Sync completed successfully!
 
 🚀 NEXT STEPS:
-1. Run /feat/implement to start coding
-2. Or run /feat/show to review the specification
+1. Run /specflow-implement to start coding
+2. Or run /specflow-show to review the specification
 ```
 
 ## Conflict Resolution
@@ -121,4 +121,4 @@ If conflicts occur during sync:
 1. **Resolve conflicts** in your editor
 2. **Stage changes**: `git add .`
 3. **Continue rebase**: `git rebase --continue`
-4. **Re-run sync** to verify: `/feat/sync <number>`
+4. **Re-run sync** to verify: `/specflow-sync <number>`

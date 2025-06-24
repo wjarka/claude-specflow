@@ -14,15 +14,15 @@ Configuration is loaded from `.claude-specflow` file (see @.claude-specflow.exam
 
 This toolkit enables parallel feature development using isolated git worktrees and specification-driven development:
 
-1. **Plan** → `/feat/plan` - Create detailed specification
-2. **Start** → `/feat/start <number>` - Create isolated worktree
-3. **Implement** → `/feat/implement` - Sync and start coding
-4. **Finish** → `/feat/finish <number>` - Merge back and cleanup
+1. **Plan** → `/specflow-plan` - Create detailed specification
+2. **Start** → `/specflow-start <number>` - Create isolated worktree
+3. **Implement** → `/specflow-implement` - Sync and start coding
+4. **Finish** → `/specflow-finish <number>` - Merge back and cleanup
 
 ## Implementation Guidelines
 
 **IMPORTANT**: When working in a feature worktree:
-- **Always show the specification first** using `/feat/show` when asked "What are we working on?"
+- **Always show the specification first** using `/specflow-show` when asked "What are we working on?"
 - **Present an implementation plan** and **wait for user approval** before starting any coding
 - **Exception**: If user asks "What are we working on?" → you show spec → user says "implement this", you can start immediately without re-approval
 - **Never start implementing immediately** on initial requests - always confirm the approach first
@@ -30,13 +30,13 @@ This toolkit enables parallel feature development using isolated git worktrees a
 
 ## Available Commands
 
-- `/feat/plan` - Interactive feature planning and specification creation
-- `/feat/start <number>` - Create isolated feature worktree
-- `/feat/list` - Show all active features with next steps
-- `/feat/sync <number>` - Sync feature with main branch
-- `/feat/show` - Show current feature specification (auto-detected)
-- `/feat/implement` - Auto-detect, sync, and start implementation
-- `/feat/finish <number>` - Merge back and cleanup
+- `/specflow-plan` - Interactive feature planning and specification creation
+- `/specflow-start <number>` - Create isolated feature worktree
+- `/specflow-list` - Show all active features with next steps
+- `/specflow-sync <number>` - Sync feature with main branch
+- `/specflow-show` - Show current feature specification (auto-detected)
+- `/specflow-implement` - Auto-detect, sync, and start implementation
+- `/specflow-finish <number>` - Merge back and cleanup
 
 ## Git Workflow
 
