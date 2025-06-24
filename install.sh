@@ -38,17 +38,17 @@ for cmd in plan start list show implement finish sync; do
     cp "$TOOLKIT_DIR/commands/specflow-$cmd.md" "$CLAUDE_DIR/commands/specflow-$cmd.md"
 done
 
-# Copy CLAUDE.feat.md
-if [ -f "$CLAUDE_DIR/CLAUDE.feat.md" ] && [ ! -f "$CLAUDE_DIR/CLAUDE.feat.md.backup" ]; then
-    echo "⚠️  Found existing CLAUDE.feat.md, backing up to CLAUDE.feat.md.backup"
-    cp "$CLAUDE_DIR/CLAUDE.feat.md" "$CLAUDE_DIR/CLAUDE.feat.md.backup"
+# Copy CLAUDE.specflow.md
+if [ -f "$CLAUDE_DIR/CLAUDE.specflow.md" ] && [ ! -f "$CLAUDE_DIR/CLAUDE.specflow.md.backup" ]; then
+    echo "⚠️  Found existing CLAUDE.specflow.md, backing up to CLAUDE.specflow.md.backup"
+    cp "$CLAUDE_DIR/CLAUDE.specflow.md" "$CLAUDE_DIR/CLAUDE.specflow.md.backup"
 fi
 
-cp "$TOOLKIT_DIR/CLAUDE.feat.md" "$CLAUDE_DIR/CLAUDE.feat.md"
+cp "$TOOLKIT_DIR/CLAUDE.specflow.md" "$CLAUDE_DIR/CLAUDE.specflow.md"
 
 # Add import to ~/.claude/CLAUDE.md for auto-loading
 CLAUDE_MD="$CLAUDE_DIR/CLAUDE.md"
-IMPORT_LINE="@CLAUDE.feat.md"
+IMPORT_LINE="@CLAUDE.specflow.md"
 
 if [ -f "$CLAUDE_MD" ]; then
     # Check if import already exists

@@ -164,7 +164,7 @@ claude  # Start Claude Code session
 The install script:
 1. Clones toolkit to `~/.claude-specflow`
 2. Copies commands to `~/.claude/commands/`
-3. Copies `~/.claude/CLAUDE.feat.md` for global instructions
+3. Copies `~/.claude/CLAUDE.specflow.md` for global instructions
 
 ### Manual Installation
 ```bash
