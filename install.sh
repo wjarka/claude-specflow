@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Claude Specflow Installation Script
-# Installs claude-specflow globally using symlinks for easy updates
+# Installs claude-specflow globally by copying files
 
 set -e
 
@@ -24,28 +24,24 @@ else
     git clone "$REPO_URL" "$TOOLKIT_DIR"
 fi
 
-echo "🔗 Creating symlinks..."
+echo "📋 Copying command files..."
 
-# Create symlinks for specflow commands
+# Copy specflow commands
 for cmd in plan start list show implement finish sync; do
-    if [ -L "$CLAUDE_DIR/commands/specflow-$cmd" ]; then
-        rm "$CLAUDE_DIR/commands/specflow-$cmd"
-    elif [ -f "$CLAUDE_DIR/commands/specflow-$cmd" ]; then
+    if [ -f "$CLAUDE_DIR/commands/specflow-$cmd" ] && [ ! -f "$CLAUDE_DIR/commands/specflow-$cmd.backup" ]; then
         echo "⚠️  Found existing specflow-$cmd, backing up to specflow-$cmd.backup"
-        mv "$CLAUDE_DIR/commands/specflow-$cmd" "$CLAUDE_DIR/commands/specflow-$cmd.backup"
+        cp "$CLAUDE_DIR/commands/specflow-$cmd" "$CLAUDE_DIR/commands/specflow-$cmd.backup"
     fi
-    ln -s "$TOOLKIT_DIR/commands/specflow-$cmd.md" "$CLAUDE_DIR/commands/specflow-$cmd"
+    cp "$TOOLKIT_DIR/commands/specflow-$cmd.md" "$CLAUDE_DIR/commands/specflow-$cmd"
 done
 
-# Create symlink for CLAUDE.feat.md
-if [ -L "$CLAUDE_DIR/CLAUDE.feat.md" ]; then
-    rm "$CLAUDE_DIR/CLAUDE.feat.md"
-elif [ -f "$CLAUDE_DIR/CLAUDE.feat.md" ]; then
+# Copy CLAUDE.feat.md
+if [ -f "$CLAUDE_DIR/CLAUDE.feat.md" ] && [ ! -f "$CLAUDE_DIR/CLAUDE.feat.md.backup" ]; then
     echo "⚠️  Found existing CLAUDE.feat.md, backing up to CLAUDE.feat.md.backup"
-    mv "$CLAUDE_DIR/CLAUDE.feat.md" "$CLAUDE_DIR/CLAUDE.feat.md.backup"
+    cp "$CLAUDE_DIR/CLAUDE.feat.md" "$CLAUDE_DIR/CLAUDE.feat.md.backup"
 fi
 
-ln -s "$TOOLKIT_DIR/CLAUDE.feat.md" "$CLAUDE_DIR/CLAUDE.feat.md"
+cp "$TOOLKIT_DIR/CLAUDE.feat.md" "$CLAUDE_DIR/CLAUDE.feat.md"
 
 # Add import to ~/.claude/CLAUDE.md for auto-loading
 CLAUDE_MD="$CLAUDE_DIR/CLAUDE.md"

@@ -163,8 +163,8 @@ claude  # Start Claude Code session
 
 The install script:
 1. Clones toolkit to `~/.claude-specflow`
-2. Creates symlinks in `~/.claude/commands/feat/`
-3. Links `~/.claude/CLAUDE.feat.md` for global instructions
+2. Copies commands to `~/.claude/commands/`
+3. Copies `~/.claude/CLAUDE.feat.md` for global instructions
 
 ### Manual Installation
 ```bash
@@ -174,8 +174,8 @@ git clone https://github.com/wjarka/claude-specflow ~/.claude-specflow
 
 ### Upgrading
 ```bash
-cd ~/.claude-specflow && git pull
-# Symlinks automatically use the updated version
+~/.claude-specflow/install.sh
+# Script automatically pulls latest changes and updates files
 ```
 
 ## 🏗️ Integration with Existing Projects
