@@ -28,11 +28,11 @@ echo "📋 Copying command files..."
 
 # Copy specflow commands
 for cmd in plan start list show implement finish sync; do
-    if [ -f "$CLAUDE_DIR/commands/specflow-$cmd" ] && [ ! -f "$CLAUDE_DIR/commands/specflow-$cmd.backup" ]; then
-        echo "⚠️  Found existing specflow-$cmd, backing up to specflow-$cmd.backup"
-        cp "$CLAUDE_DIR/commands/specflow-$cmd" "$CLAUDE_DIR/commands/specflow-$cmd.backup"
+    if [ -f "$CLAUDE_DIR/commands/specflow-$cmd.md" ] && [ ! -f "$CLAUDE_DIR/commands/specflow-$cmd.md.backup" ]; then
+        echo "⚠️  Found existing specflow-$cmd.md, backing up to specflow-$cmd.md.backup"
+        cp "$CLAUDE_DIR/commands/specflow-$cmd.md" "$CLAUDE_DIR/commands/specflow-$cmd.md.backup"
     fi
-    cp "$TOOLKIT_DIR/commands/specflow-$cmd.md" "$CLAUDE_DIR/commands/specflow-$cmd"
+    cp "$TOOLKIT_DIR/commands/specflow-$cmd.md" "$CLAUDE_DIR/commands/specflow-$cmd.md"
 done
 
 # Copy CLAUDE.feat.md
