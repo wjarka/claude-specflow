@@ -1,3 +1,8 @@
+---
+description: Completes feature development by merging back to main and cleaning up the worktree
+approved-tools: [Bash]
+---
+
 # Finish Feature
 
 Completes feature development by merging back to main and cleaning up the worktree.

@@ -1,3 +1,8 @@
+---
+description: Syncs feature branch with latest default branch and prepares for implementation
+approved-tools: [Bash]
+---
+
 # Sync Feature
 
 Syncs feature branch with latest default branch and prepares for implementation.

@@ -1,3 +1,8 @@
+---
+description: Interactive feature planning that creates a structured implementation plan
+approved-tools: [Bash, Read, Write, Glob, Grep, TodoWrite]
+---
+
 # Plan Feature
 
 Interactive feature planning that creates a structured implementation plan and documents it in the specs directory.

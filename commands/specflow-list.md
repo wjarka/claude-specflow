@@ -1,3 +1,8 @@
+---
+description: Shows all active feature worktrees and their status
+approved-tools: [Bash]
+---
+
 # List Features
 
 Shows all active feature worktrees and their status.
