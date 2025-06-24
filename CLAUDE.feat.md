@@ -45,20 +45,6 @@ This toolkit enables parallel feature development using isolated git worktrees a
 - Each feature gets its own branch: `feature/{PREFIX}-XXX`
 - Automatic cleanup after merge
 
-## Installation
-
-Install once globally:
-```bash
-curl -fsSL https://raw.githubusercontent.com/wjarka/claude-specflow/main/install.sh | bash
-```
-
-Per project setup (optional):
-```bash
-# Create configuration file to override defaults
-cp .claude-specflow.example .claude-specflow
-# Edit as needed
-```
-
 ## Directory Structure
 
 ```
@@ -67,7 +53,7 @@ your-project/
 ├── specs/                   # Feature specifications  
 │   ├── feat-001.md
 │   └── feat-002.md
-└── src/                     # Your project files
+└── [your project files]     # Whatever structure you use
 
 # Feature worktrees created as siblings
 ../your-project-feat-001/    # Feature 1 worktree
@@ -80,5 +66,4 @@ your-project/
 - **Specification-driven**: Features start with detailed planning
 - **Isolated Environment**: Each feature has its own workspace and branch
 - **Automatic Cleanup**: Branches and worktrees cleaned up automatically
-- **Global Installation**: Install once, use in any project
 - **Flexible Configuration**: Adapts to your project conventions
