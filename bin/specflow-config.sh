@@ -119,8 +119,17 @@ normalize_feature_number() {
 # Get worktree path for a feature
 get_worktree_path() {
     local feature_number="$1"
-    local project_name=$(detect_project_name)
-    echo "../$project_name-$feature_number"
+    local project_name
+    
+    # If we're in a feature worktree, extract the base project name
+    if project_name=$(extract_project_from_worktree_dir); then
+        # We're in a worktree, use the extracted base project name
+        echo "../$project_name-$feature_number"
+    else
+        # Not in worktree, use regular detection
+        project_name=$(detect_project_name)
+        echo "../$project_name-$feature_number"
+    fi
 }
 
 # Get branch name for a feature
