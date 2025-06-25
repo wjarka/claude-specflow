@@ -12,3 +12,6 @@
 
 # Default branch for merging (default: auto-detected main/master)
 # DEFAULT_BRANCH=develop
+
+# Environment files to copy to worktrees (default: .env,.env.local,.env.test,.env.development)
+# ENV_FILES=.env,.env.test,.env.staging

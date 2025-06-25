@@ -56,6 +56,9 @@ fi
 echo "🚀 Creating feature worktree for '$FEATURE_NUMBER'..."
 git worktree add "$WORKTREE_PATH" -b "$BRANCH_NAME"
 
+# Copy environment files if they exist
+copy_env_files "$WORKTREE_PATH"
+
 echo ""
 echo "✅ Feature worktree created successfully!"
 echo "📁 Path: $WORKTREE_PATH"

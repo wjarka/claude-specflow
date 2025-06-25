@@ -8,6 +8,7 @@ DEFAULT_PROJECT_NAME=""
 DEFAULT_FEATURE_PREFIX="feat"
 DEFAULT_SPEC_DIR="specs"
 DEFAULT_BRANCH=""
+DEFAULT_ENV_FILES=".env,.env.local,.env.test,.env.development"
 
 # Load configuration from .claude-specflow file if it exists
 load_config() {
@@ -87,6 +88,15 @@ get_spec_dir() {
     fi
 }
 
+# Get environment files to copy
+get_env_files() {
+    if [ -n "$ENV_FILES" ]; then
+        echo "$ENV_FILES"
+    else
+        echo "$DEFAULT_ENV_FILES"
+    fi
+}
+
 # Normalize feature number to standard format (e.g., "9" -> "feat-009")
 normalize_feature_number() {
     local input="$1"
@@ -152,6 +162,33 @@ extract_project_from_worktree_dir() {
         return 0
     else
         return 1
+    fi
+}
+
+# Copy environment files to worktree
+copy_env_files() {
+    local worktree_path="$1"
+    local env_files=$(get_env_files)
+    local copied_files=()
+    
+    # Convert comma-separated list to array
+    IFS=',' read -ra file_array <<< "$env_files"
+    
+    for file in "${file_array[@]}"; do
+        # Trim whitespace
+        file=$(echo "$file" | xargs)
+        
+        # Check if file exists in current directory
+        if [ -f "$file" ]; then
+            # Copy file to worktree
+            cp "$file" "$worktree_path/"
+            copied_files+=("$file")
+        fi
+    done
+    
+    # Report copied files
+    if [ ${#copied_files[@]} -gt 0 ]; then
+        echo "📄 Copied: $(IFS=', '; echo "${copied_files[*]}")"
     fi
 }
 
