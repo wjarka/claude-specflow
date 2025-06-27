@@ -120,7 +120,7 @@ normalize_feature_number() {
 get_worktree_path() {
     local feature_number="$1"
     local project_name
-    
+
     # If we're in a feature worktree, extract the base project name
     if project_name=$(extract_project_from_worktree_dir); then
         # We're in a worktree, use the extracted base project name
@@ -149,11 +149,10 @@ get_spec_file() {
 extract_feature_from_dir() {
     local current_dir=$(basename "$PWD")
     local prefix=$(get_feature_prefix)
+    local pattern="^.*-($prefix-[0-9]+)$"
 
-    # Check if we're in a feature worktree (pattern: {PROJECT}-{PREFIX}-{NUMBER})
-    if [[ "$current_dir" =~ ^.*-$prefix-[0-9]+$ ]]; then
-        # Extract the feature part (prefix-number)
-        echo "$current_dir" | sed "s/^.*-\($prefix-[0-9]\+\)$/\1/"
+    if [[ "$current_dir" =~ $pattern ]]; then
+        echo "${BASH_REMATCH[1]}"
         return 0
     else
         return 1
@@ -164,10 +163,10 @@ extract_feature_from_dir() {
 extract_project_from_worktree_dir() {
     local current_dir=$(basename "$PWD")
     local prefix=$(get_feature_prefix)
+    local pattern="^(.+)-$prefix-[0-9]+$"
 
-    # Extract project name from pattern: {PROJECT}-{PREFIX}-{NUMBER}
-    if [[ "$current_dir" =~ ^.*-$prefix-[0-9]+$ ]]; then
-        echo "$current_dir" | sed "s/-$prefix-[0-9]\+$//"
+    if [[ "$current_dir" =~ $pattern ]]; then
+        echo "${BASH_REMATCH[1]}"
         return 0
     else
         return 1
@@ -179,14 +178,14 @@ copy_env_files() {
     local worktree_path="$1"
     local env_files=$(get_env_files)
     local copied_files=()
-    
+
     # Convert comma-separated list to array
     IFS=',' read -ra file_array <<< "$env_files"
-    
+
     for file in "${file_array[@]}"; do
         # Trim whitespace
         file=$(echo "$file" | xargs)
-        
+
         # Check if file exists in current directory
         if [ -f "$file" ]; then
             # Copy file to worktree
@@ -194,7 +193,7 @@ copy_env_files() {
             copied_files+=("$file")
         fi
     done
-    
+
     # Report copied files
     if [ ${#copied_files[@]} -gt 0 ]; then
         echo "📄 Copied: $(IFS=', '; echo "${copied_files[*]}")"
