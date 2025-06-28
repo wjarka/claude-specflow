@@ -37,6 +37,7 @@ This toolkit enables parallel feature development using isolated git worktrees a
 - `/specflow-show` - Show current feature specification (auto-detected)
 - `/specflow-implement` - Auto-detect, sync, and start implementation
 - `/specflow-finish <number>` - Merge back and cleanup
+- `/specflow-update` - Update specflow toolkit to latest version
 
 ## Git Workflow
 

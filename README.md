@@ -47,6 +47,7 @@ claude
 | `/specflow-implement` | Sync and start coding | Must be in feature worktree |
 | `/specflow-finish <n>` | Complete and merge | `/specflow-finish 1` |
 | `/specflow-sync <n>` | Sync with main branch | Usually not needed |
+| `/specflow-update` | Update toolkit | Updates to latest version |
 
 ## 🔄 Development Workflow
 
@@ -173,9 +174,18 @@ git clone https://github.com/wjarka/claude-specflow ~/.claude-specflow
 ```
 
 ### Upgrading
+
+**Using the update command (recommended):**
 ```bash
+claude
+/specflow-update
+```
+
+**Or run the script directly:**
+```bash
+~/.claude-specflow/bin/specflow-update.sh
+# Or alternatively:
 ~/.claude-specflow/install.sh
-# Script automatically pulls latest changes and updates files
 ```
 
 ## 🏗️ Integration with Existing Projects

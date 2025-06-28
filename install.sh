@@ -30,7 +30,7 @@ fi
 echo "📋 Copying command files..."
 
 # Copy specflow commands
-for cmd in plan start list show implement finish sync; do
+for cmd in plan start list show implement finish sync update; do
     if [ -f "$CLAUDE_DIR/commands/specflow-$cmd.md" ] && [ ! -f "$CLAUDE_DIR/commands/specflow-$cmd.md.backup" ]; then
         echo "⚠️  Found existing specflow-$cmd.md, backing up to specflow-$cmd.md.backup"
         cp "$CLAUDE_DIR/commands/specflow-$cmd.md" "$CLAUDE_DIR/commands/specflow-$cmd.md.backup"
@@ -90,6 +90,8 @@ echo "  /specflow-list     - List active features"
 echo "  /specflow-show     - Show current feature spec"
 echo "  /specflow-implement - Sync and start implementation"
 echo "  /specflow-finish   - Complete and merge feature"
+echo "  /specflow-sync     - Sync feature with main branch"
+echo "  /specflow-update   - Update specflow toolkit"
 echo ""
 echo "🚀 To get started:"
 echo "1. cd to your project directory"
