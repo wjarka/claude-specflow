@@ -1,0 +1,1 @@
+- Remember this project is a tool that is being used in other projects. When provided an error message or issue to be solved - remember the context may be the outside project, not this tool and we need to handle the problem systematically at the tool level.

@@ -60,8 +60,21 @@ create_spec_file() {
     echo "🚀 NEXT STEP: Run \`/specflow-start ${feature_number##*-}\` to create the feature worktree"
 }
 
-# If called directly, show next available feature number
+# If called directly, handle based on arguments
 if [ "${BASH_SOURCE[0]}" = "${0}" ]; then
-    NEXT_FEATURE=$(find_next_feature_number)
-    echo "Next available feature number: $NEXT_FEATURE"
+    if [ $# -eq 0 ]; then
+        # No arguments: show next available feature number
+        NEXT_FEATURE=$(find_next_feature_number)
+        echo "Next available feature number: $NEXT_FEATURE"
+    elif [ $# -eq 1 ]; then
+        # One argument: create spec file with provided content
+        CONTENT="$1"
+        NEXT_FEATURE=$(find_next_feature_number)
+        create_spec_file "$NEXT_FEATURE" "$CONTENT"
+    else
+        echo "Usage: $0 [content]"
+        echo "  No args: Show next available feature number"
+        echo "  With content: Create spec file with content"
+        exit 1
+    fi
 fi

@@ -44,8 +44,8 @@ Creates a structured plan including:
 
 ### Step 4: Documentation & Next Steps
 
-- Find next available feature number ({PREFIX}-XXX.md)
-- Create properly formatted specification file
+- Use Bash tool to call `~/.claude-specflow/bin/specflow-plan.sh "$SPEC_CONTENT"` to create spec file with proper {PREFIX}-XXX.md naming
+- The script handles finding next available feature number and creating the file
 - **Guide user to next step**: `/specflow-start <number>`
 
 ## Example Usage
@@ -64,7 +64,7 @@ Creates a structured plan including:
 > Do you approve this plan? (yes/no/modify):
 yes
 
-✅ Plan documented in {SPEC_DIR}/{PREFIX}-009.md
+✅ Plan documented in specs/feat-009.md
 
 🚀 NEXT STEP: Run `/specflow-start 9` to create the feature worktree
 ```
