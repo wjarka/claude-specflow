@@ -1,30 +1,106 @@
 #!/bin/bash
 
 # Claude Specflow Installation Script
-# Installs claude-specflow globally by copying files
+# Installs claude-specflow from git repository, local directory, or specific branch
 
 set -e
 
-# Preserve original working directory
+# Default values
+BRANCH=""
+USE_LOCAL=false
 ORIGINAL_DIR="$PWD"
+
+# Parse command line arguments
+while [[ $# -gt 0 ]]; do
+    case $1 in
+        --local|-l)
+            USE_LOCAL=true
+            shift
+            ;;
+        --branch|-b)
+            BRANCH="$2"
+            shift 2
+            ;;
+        --help|-h)
+            echo "Claude Specflow Installation"
+            echo ""
+            echo "Usage: ./install.sh [options]"
+            echo ""
+            echo "Options:"
+            echo "  --local, -l            Install from current local directory (for development)"
+            echo "  --branch, -b <branch>  Install from specific git branch (default: main)"
+            echo "  --help, -h             Show this help message"
+            echo ""
+            echo "Examples:"
+            echo "  ./install.sh               # Install from main branch"
+            echo "  ./install.sh --local       # Install from current directory"
+            echo "  ./install.sh -b develop    # Install from develop branch"
+            exit 0
+            ;;
+        *)
+            echo "Unknown option: $1"
+            echo "Use --help for usage information"
+            exit 1
+            ;;
+    esac
+done
 
 TOOLKIT_DIR="$HOME/.claude-specflow"
 CLAUDE_DIR="$HOME/.claude"
 REPO_URL="https://github.com/wjarka/claude-specflow.git"
 
-echo "🚀 Installing Claude Specflow..."
+# Determine installation mode
+if [ "$USE_LOCAL" = true ]; then
+    # Find the script directory (where install.sh is located)
+    SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+    SOURCE_DIR="$SCRIPT_DIR"
+    echo "🚀 Installing Claude Specflow from local directory: $SOURCE_DIR"
+else
+    echo "🚀 Installing Claude Specflow from git repository (branch: ${BRANCH:-main})"
+fi
 
 # Create .claude directory if it doesn't exist
 mkdir -p "$CLAUDE_DIR/commands"
 
-# Clone or update toolkit repository
-if [ -d "$TOOLKIT_DIR" ]; then
-    echo "📥 Updating existing installation..."
-    cd "$TOOLKIT_DIR"
-    git pull
+# Handle installation source
+if [ "$USE_LOCAL" = true ]; then
+    # Local installation - copy files directly
+    echo "📋 Copying files from local directory..."
+    
+    # Create toolkit directory if it doesn't exist
+    mkdir -p "$TOOLKIT_DIR"
+    
+    # Copy all files from local directory to toolkit directory
+    # Using rsync if available for better handling, otherwise cp
+    if command -v rsync &> /dev/null; then
+        rsync -av --exclude='.git' --exclude='*.backup' --exclude='node_modules' "$SOURCE_DIR/" "$TOOLKIT_DIR/"
+    else
+        # Fallback to cp
+        cp -r "$SOURCE_DIR"/* "$TOOLKIT_DIR/" 2>/dev/null || true
+        cp "$SOURCE_DIR"/.claude-specflow.example "$TOOLKIT_DIR/" 2>/dev/null || true
+    fi
 else
-    echo "📥 Downloading claude-specflow..."
-    git clone "$REPO_URL" "$TOOLKIT_DIR"
+    # Git installation
+    if [ -d "$TOOLKIT_DIR" ]; then
+        echo "📥 Updating existing installation..."
+        cd "$TOOLKIT_DIR"
+        git fetch
+        if [ -n "$BRANCH" ]; then
+            git checkout "$BRANCH"
+            git pull origin "$BRANCH"
+        else
+            git checkout main
+            git pull origin main
+        fi
+    else
+        echo "📥 Downloading claude-specflow..."
+        if [ -n "$BRANCH" ]; then
+            git clone -b "$BRANCH" "$REPO_URL" "$TOOLKIT_DIR"
+        else
+            git clone "$REPO_URL" "$TOOLKIT_DIR"
+        fi
+    fi
+    SOURCE_DIR="$TOOLKIT_DIR"
 fi
 
 echo "📋 Copying command files..."
@@ -35,7 +111,7 @@ for cmd in plan start list show implement finish sync update; do
         echo "⚠️  Found existing specflow-$cmd.md, backing up to specflow-$cmd.md.backup"
         cp "$CLAUDE_DIR/commands/specflow-$cmd.md" "$CLAUDE_DIR/commands/specflow-$cmd.md.backup"
     fi
-    cp "$TOOLKIT_DIR/commands/specflow-$cmd.md" "$CLAUDE_DIR/commands/specflow-$cmd.md"
+    cp "$SOURCE_DIR/commands/specflow-$cmd.md" "$CLAUDE_DIR/commands/specflow-$cmd.md"
 done
 
 # Copy CLAUDE.specflow.md
@@ -44,7 +120,7 @@ if [ -f "$CLAUDE_DIR/CLAUDE.specflow.md" ] && [ ! -f "$CLAUDE_DIR/CLAUDE.specflo
     cp "$CLAUDE_DIR/CLAUDE.specflow.md" "$CLAUDE_DIR/CLAUDE.specflow.md.backup"
 fi
 
-cp "$TOOLKIT_DIR/CLAUDE.specflow.md" "$CLAUDE_DIR/CLAUDE.specflow.md"
+cp "$SOURCE_DIR/CLAUDE.specflow.md" "$CLAUDE_DIR/CLAUDE.specflow.md"
 
 # Add import to ~/.claude/CLAUDE.md for auto-loading
 CLAUDE_MD="$CLAUDE_DIR/CLAUDE.md"
@@ -69,20 +145,25 @@ else
     echo "✅ Created CLAUDE.md with Claude Specflow import"
 fi
 
-# Copy bin directory with all scripts
-echo "📋 Copying script files..."
+# Ensure bin directory exists in toolkit directory
 mkdir -p "$TOOLKIT_DIR/bin"
-
-# Copy all scripts from the repository to the installation directory
-# (Note: We're in $TOOLKIT_DIR at this point from the cd above)
-cp bin/*.sh "$TOOLKIT_DIR/bin/" 2>/dev/null || true
 
 # Make all scripts executable
 echo "🔧 Making scripts executable..."
-chmod +x "$TOOLKIT_DIR/bin/"*.sh
+chmod +x "$TOOLKIT_DIR/bin/"*.sh 2>/dev/null || true
 
 echo "✅ Claude Specflow installed successfully!"
 echo ""
+
+# Display installation summary
+if [ "$USE_LOCAL" = true ]; then
+    echo "📦 Installed from: Local directory ($SOURCE_DIR)"
+else
+    echo "📦 Installed from: Git repository (branch: ${BRANCH:-main})"
+fi
+echo "📂 Installation directory: $TOOLKIT_DIR"
+echo ""
+
 echo "📋 Available commands:"
 echo "  /specflow-plan     - Plan a new feature"
 echo "  /specflow-start    - Create feature worktree" 
@@ -94,15 +175,22 @@ echo "  /specflow-sync     - Sync feature with main branch"
 echo "  /specflow-update   - Update specflow toolkit"
 echo ""
 echo "🚀 To get started:"
-echo "1. cd to your project directory"
-echo "2. Run /specflow-plan to create your first feature"
+echo "1. Navigate to your project directory"
+echo "2. Start a Claude session (claude or claude-code)"
+echo "3. Run /specflow-plan to create your first feature"
 echo ""
 echo "💡 Optional: Copy .claude-specflow.example to your project root as .claude-specflow to customize settings"
+
+if [ "$USE_LOCAL" = true ]; then
+    echo ""
+    echo "💻 Development tips:"
+    echo "  - Run ./install.sh --local after making changes"
+    echo "  - Use ./install.sh -b <branch> to test from a git branch"
+    echo "  - Your existing files were backed up with .backup extension"
+fi
+
 echo ""
 echo "📚 For more info, see the toolkit documentation or run /specflow-plan to get started!"
 
-# Check if running from the toolkit directory itself
-if [[ "$ORIGINAL_DIR" == *"claude-specflow"* ]]; then
-    echo ""
-    echo "⚠️  Note: You're currently in the toolkit directory. Navigate to your project directory to start using the commands."
-fi
+# Return to original directory
+cd "$ORIGINAL_DIR"
