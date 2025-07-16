@@ -188,8 +188,16 @@ copy_env_files() {
 
         # Check if file exists in current directory
         if [ -f "$file" ]; then
-            # Copy file to worktree
-            cp "$file" "$worktree_path/"
+            # Get directory component of the file
+            local file_dir=$(dirname "$file")
+
+            # Create directory structure in worktree if needed
+            if [ "$file_dir" != "." ]; then
+                mkdir -p "$worktree_path/$file_dir"
+            fi
+
+            # Copy file to worktree preserving directory structure
+            cp "$file" "$worktree_path/$file"
             copied_files+=("$file")
         fi
     done
