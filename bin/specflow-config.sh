@@ -118,7 +118,7 @@ normalize_feature_number() {
 
 # Get worktree path for a feature
 get_worktree_path() {
-    local feature_number="$1"
+    local feature_number=$(normalize_feature_number "$1")
     local project_name
 
     # If we're in a feature worktree, extract the base project name
